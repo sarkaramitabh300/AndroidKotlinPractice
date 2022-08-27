@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
-        viewModel.count.observe(this, Observer {
+        viewModel.countData.observe(this, Observer {
             binding.countText.text = it.toString()
         })
 
