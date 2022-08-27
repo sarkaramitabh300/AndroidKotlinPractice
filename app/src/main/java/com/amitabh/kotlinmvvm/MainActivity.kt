@@ -9,10 +9,12 @@ import com.amitabh.kotlinmvvm.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainActivityViewModel
+    private lateinit var viewModelFactory: MainActivityViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        viewModelFactory = MainActivityViewModelFactory(123.0)
+        viewModel = ViewModelProvider(this,viewModelFactory).get(MainActivityViewModel::class.java)
         binding.showDataTv.text = viewModel.getCurrentCount().toString()
 
         binding.calculateBtn.setOnClickListener {
