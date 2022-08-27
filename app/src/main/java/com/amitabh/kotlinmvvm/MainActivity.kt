@@ -3,6 +3,7 @@ package com.amitabh.kotlinmvvm
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.amitabh.kotlinmvvm.databinding.ActivityMainBinding
 
@@ -14,17 +15,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModelFactory = MainActivityViewModelFactory(123.0)
-        viewModel = ViewModelProvider(this,viewModelFactory).get(MainActivityViewModel::class.java)
-        binding.showDataTv.text = viewModel.getCurrentCount().toString()
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
+        viewModel.count.observe(this, Observer {
+            binding.showDataTv.text = it.toString()
+        })
+
 
         binding.calculateBtn.setOnClickListener {
-            var value = binding.inputNumberEt.text.toString()
-            if (value.isEmpty()) {
-                value = "0"
-            }
-            binding.showDataTv.text =
-                viewModel.getUpdateCount(value.toDouble())
-                    .toString()
+            var value = if (binding.inputNumberEt.text.toString()
+                    .isNotEmpty()
+            ) binding.inputNumberEt.text.toString().toDouble() else 0.0
+            viewModel.getUpdateCount(value)
 
         }
 

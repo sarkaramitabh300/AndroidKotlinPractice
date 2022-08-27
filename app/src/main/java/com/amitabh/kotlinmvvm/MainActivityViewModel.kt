@@ -1,20 +1,17 @@
 package com.amitabh.kotlinmvvm
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainActivityViewModel(startingTotal: Double) : ViewModel() {
-    private var count: Double = 0.0
+    var count = MutableLiveData<Double>()
 
     init {
-        count = startingTotal
+        count.value = startingTotal
     }
 
-    fun getCurrentCount(): Double {
-        return count
-    }
 
-    fun getUpdateCount(value: Double): Double {
-        count += value
-        return count
+    fun getUpdateCount(inputValue: Double) {
+        count.value = (count.value)?.plus(inputValue)
     }
 }
