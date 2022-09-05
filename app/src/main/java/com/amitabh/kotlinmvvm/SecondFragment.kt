@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import com.amitabh.kotlinmvvm.databinding.FragmentSecondBinding
 
@@ -38,6 +39,8 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_second, container, false)
+        var input: String? = requireArguments().getString("user_input")
+        binding.textView.text = input
         return binding.root
     }
 
